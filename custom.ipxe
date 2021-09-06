@@ -26,8 +26,8 @@ boot || goto custom_exit
 :option_two
 set win_arch x64
 imgfree
-#kernel http://${boot_domain}/wimboot
-kernel https://boot.netboot.xyz/memdisk raw
+kernel http://${boot_domain}/wimboot
+#kernel https://boot.netboot.xyz/memdisk raw
 
 initrd -n BOOTMGR     ${win_base_url}/${win_arch}/BOOTMGR       BOOTMGR ||
 initrd -n bootmgr.efi ${win_base_url}/${win_arch}/bootmgr.efi   bootmgr.efi ||      
