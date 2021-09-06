@@ -24,9 +24,22 @@ imgargs vmlinuz put_kernel_img_args_here
 boot || goto custom_exit
 
 :option_two
-kernel https://boot.netboot.xyz/memdisk raw iso
+set win_arch x64
+imgfree
 #kernel http://${boot_domain}/wimboot
-initrd http://192.168.10.203/iso/WinPE_amd64_PS.iso
+kernel https://boot.netboot.xyz/memdisk raw
+
+initrd -n BOOTMGR     ${win_base_url}/${win_arch}/BOOTMGR       BOOTMGR ||
+initrd -n bootmgr.efi ${win_base_url}/${win_arch}/bootmgr.efi   bootmgr.efi ||      
+initrd -n bcd         ${win_base_url}/${win_arch}/boot/bcd      bcd ||
+#initrd -n bcd         ${win_base_url}/${win_arch}/Boot/BCD      bcd ||
+initrd -n boot.sdi    ${win_base_url}/${win_arch}/boot/boot.sdi boot.sdi ||
+#initrd -n boot.sdi    ${win_base_url}/${win_arch}/Boot/boot.sdi boot.sdi ||
+initrd -n boot.wim    ${win_base_url}/${win_arch}/sources/boot.wim boot.wim
+
+
+#kernel http://${boot_domain}/wimboot
+#initrd http://192.168.10.203/iso/WinPE_amd64_PS.iso
 boot || goto custom_exit
 
 :option_three
