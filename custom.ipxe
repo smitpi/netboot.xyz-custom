@@ -24,10 +24,9 @@ imgargs vmlinuz put_kernel_img_args_here
 boot || goto custom_exit
 
 :option_two
-#kernel https://boot.netboot.xyz/memdisk raw iso
-kernel https://boot.netboot.xyz/memdisk iso
-kernel http://${boot_domain}/wimboot
-initrd http://192.168.10.40:8077/iso/WinPE_amd64_PS.iso
+kernel https://boot.netboot.xyz/memdisk raw iso
+#kernel http://${boot_domain}/wimboot
+initrd http://192.168.10.203/iso/WinPE_amd64_PS.iso
 boot || goto custom_exit
 
 :option_three
