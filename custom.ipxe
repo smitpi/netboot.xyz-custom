@@ -24,6 +24,8 @@ imgargs vmlinuz put_kernel_img_args_here
 boot || goto custom_exit
 
 :option_two
+set win_arch x64-old
+set win_base_url http://192.168.10.203/WinPE
 isset ${win_base_url} && goto boot ||
 
 :boot
