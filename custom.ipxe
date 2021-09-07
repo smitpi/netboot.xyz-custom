@@ -7,9 +7,10 @@
 clear custom_choice
 menu This is a Test Menu
 item --gap This is the first sub menu
-item option_one ${space} Loading hasleo
 item option_two ${space} Loading WinPE x64
-item PartAssist ${space} Loading PartAssist
+item option_one ${space} Loading Hasleo Backup Tool
+item PartAssist ${space} Loading Partition Assistant
+item HBCD ${space} Loading Hiren's boot disk
 item --gap This is a second sub menu
 item option_three ${space} Loads another custom sub menu
 item option_four ${space} This is option four
@@ -34,7 +35,7 @@ initrd -n boot.wim    ${win_base_url}/sources/boot.wim boot.wim
 boot || goto custom_exit
 
 :option_two
-set win_arch x64-old
+set win_arch x64
 set win_base_url http://192.168.10.203/WinPE
 isset ${win_base_url}
 imgfree
@@ -63,6 +64,23 @@ initrd -n boot.sdi    ${win_base_url}/boot/boot.sdi boot.sdi ||
 initrd -n boot.sdi    ${win_base_url}/Boot/boot.sdi boot.sdi ||
 initrd -n boot.wim    ${win_base_url}/sources/boot.wim boot.wim
 boot || goto custom_exit
+
+
+:HBCD
+set win_base_url http://192.168.10.203/HBCD
+isset ${win_base_url}
+imgfree
+kernel http://${boot_domain}/wimboot
+initrd -n BOOTMGR     ${win_base_url}/BOOTMGR       BOOTMGR ||
+initrd -n bootmgr     ${win_base_url}/bootmgr       bootmgr ||
+initrd -n bootmgr.efi ${win_base_url}/bootmgr.efi   bootmgr.efi ||      
+initrd -n bcd         ${win_base_url}/boot/bcd      bcd ||
+initrd -n bcd         ${win_base_url}/Boot/BCD      bcd ||
+initrd -n boot.sdi    ${win_base_url}/boot/boot.sdi boot.sdi ||
+initrd -n boot.sdi    ${win_base_url}/Boot/boot.sdi boot.sdi ||
+initrd -n boot.wim    ${win_base_url}/sources/boot.wim boot.wim
+boot || goto custom_exit
+
 
 :option_three
 echo Chains into another menu...
